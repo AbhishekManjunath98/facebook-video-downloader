@@ -7,168 +7,87 @@ import {
   TextField,
 } from "@mui/material";
 import DownloadImage from "../assets/images/download.png";
-import React, { ChangeEventHandler, useState } from "react";
+import React, { ChangeEventHandler, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import axios from "axios";
 import { Root } from "../extras/types";
 
-const API_BASE_URL = `http://192.168.1.88:3003/extras/v1/api/youtube/download-audio?videoUrl=`;
+const API_BASE_URL = `http://192.168.1.88:5001/extras/v1/api/youtube/facebook-video-download?videoUrl=`;
 var static_video_url = "";
 
 const sampleResponse: Root = {
   message: "success",
-  downloadableFormats: [
-    {
-      mimeType: 'audio/webm; codecs="opus"',
-      qualityLabel: null,
-      bitrate: 158394,
-      audioBitrate: 160,
-      itag: 251,
-      initRange: {
-        start: "0",
-        end: "265",
+  url: "https://www.facebook.com/share/r/euncZGFVjpQZJ12v/?mibextid=roAVj8",
+  info: {
+    developer: "@Alia Uhuy",
+    status: true,
+    data: [
+      {
+        resolution: "720p (HD)",
+        thumbnail:
+          "https://scontent-ber1-1.xx.fbcdn.net/v/t15.5256-10/384549483_879062817257915_8132609418417021492_n.jpg?stp=dst-jpg_s960x960&_nc_cat=105&ccb=1-7&_nc_sid=dd673f&_nc_ohc=ZwXkw3_YmToAX8lZxqI&_nc_ht=scontent-ber1-1.xx&oh=00_AfB3FhBApylgD38n3HWLIRMPio0bdMzNcCFEUpjWuVOh2A&oe=659F62E1",
+        url: "https://video-ber1-1.xx.fbcdn.net/o1/v/t2/f1/m69/GEA6eBdOZca95nIEAAcEW_Sh_TcTbmdjAAAF.mp4?efg=eyJ2ZW5jb2RlX3RhZyI6Im9lcF9oZCJ9&_nc_ht=video-ber1-1.xx.fbcdn.net&_nc_cat=101&strext=1&vs=a3eb1d98886a33da&_nc_vs=HBksFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HRUE2ZUJkT1pjYTk1bklFQUFjRVdfU2hfVGNUYm1kakFBQUYVAALIAQAVAhg6cGFzc3Rocm91Z2hfZXZlcnN0b3JlL0dLRVpoaGRPU3Npb2NvVUNBRkMzWElCZWQwSTlidjRHQUFBRhUCAsgBAEsHiBJwcm9ncmVzc2l2ZV9yZWNpcGUBMQ1zdWJzYW1wbGVfZnBzABB2bWFmX2VuYWJsZV9uc3ViACBtZWFzdXJlX29yaWdpbmFsX3Jlc29sdXRpb25fc3NpbQAoY29tcHV0ZV9zc2ltX29ubHlfYXRfb3JpZ2luYWxfcmVzb2x1dGlvbgAddXNlX2xhbmN6b3NfZm9yX3ZxbV91cHNjYWxpbmcAEWRpc2FibGVfcG9zdF9wdnFzABUAJQAcjBdAAAAAAAAAABERAAAAJqzf6ey8uZ8BFQIoAkMyGAt2dHNfcHJldmlldxwXQDVdsi0OVgQYIWRhc2hfZ2VuMmh3YmFzaWNfaHEyX2ZyYWdfMl92aWRlbxIAGBh2aWRlb3MudnRzLmNhbGxiYWNrLnByb2Q4ElZJREVPX1ZJRVdfUkVRVUVTVBsKiBVvZW1fdGFyZ2V0X2VuY29kZV90YWcGb2VwX2hkE29lbV9yZXF1ZXN0X3RpbWVfbXMBMAxvZW1fY2ZnX3J1bGUHdW5tdXRlZBNvZW1fcm9pX3JlYWNoX2NvdW50BDQxNTURb2VtX2lzX2V4cGVyaW1lbnQADG9lbV92aWRlb19pZBAxNzI4MjIwNDU3Njc5NzY5Em9lbV92aWRlb19hc3NldF9pZA84NzA5MzAxMTQ1NjA2NTQVb2VtX3ZpZGVvX3Jlc291cmNlX2lkDzM1MDYzMjExNzM1MjQwNhxvZW1fc291cmNlX3ZpZGVvX2VuY29kaW5nX2lkDzE0NDM4NTIzNTM5NzgxMg52dHNfcmVxdWVzdF9pZAAlAhwAJcQBGweIAXMEMTYxMQJjZAoyMDIzLTEwLTIxA3JjYgQ0MTAwA2FwcBRGYWNlYm9vayBmb3IgQW5kcm9pZAJjdA5GQl9TSE9SVFNfUE9TVBNvcmlnaW5hbF9kdXJhdGlvbl9zBjIxLjM2NwJ0cxVwcm9ncmVzc2l2ZV9lbmNvZGluZ3MA&ccb=9-4&oh=00_AfC1kPrLru3_N7DjE_YF8ivaV3qNciz9EkkvM44756jOPw&oe=659C0EB3&_nc_sid=1d576d&_nc_rid=498418947052709&_nc_store_type=1&dl=1",
+        shouldRender: false,
       },
-      indexRange: {
-        start: "266",
-        end: "840",
+      {
+        resolution: "360p (SD)",
+        thumbnail:
+          "https://scontent-ber1-1.xx.fbcdn.net/v/t15.5256-10/384549483_879062817257915_8132609418417021492_n.jpg?stp=dst-jpg_s960x960&_nc_cat=105&ccb=1-7&_nc_sid=dd673f&_nc_ohc=ZwXkw3_YmToAX8lZxqI&_nc_ht=scontent-ber1-1.xx&oh=00_AfB3FhBApylgD38n3HWLIRMPio0bdMzNcCFEUpjWuVOh2A&oe=659F62E1",
+        url: "https://video-ber1-1.xx.fbcdn.net/v/t42.1790-2/393132035_1424789148251385_2497064395464821269_n.mp4?_nc_cat=111&ccb=1-7&_nc_sid=55d0d3&efg=eyJybHIiOjcyNywicmxhIjo1MTIsInZlbmNvZGVfdGFnIjoic3ZlX3NkIn0%3D&_nc_ohc=ZZBuRuQkY-4AX9YIs16&rl=727&vabr=404&_nc_ht=video-ber1-1.xx&oh=00_AfD3NHrV9N_RpVLQ_UGNszVjdFtKR_QbsNi8QVXN_9NCtQ&oe=65A0535D&dl=1",
+        shouldRender: false,
       },
-      lastModified: "1700167103673598",
-      contentLength: "5596757",
-      quality: "tiny",
-      projectionType: "RECTANGULAR",
-      averageBitrate: 135227,
-      audioQuality: "AUDIO_QUALITY_MEDIUM",
-      approxDurationMs: "331101",
-      audioSampleRate: "48000",
-      audioChannels: 2,
-      loudnessDb: 7.6100001,
-      url: "https://rr4---sn-cvh76nle.googlevideo.com/videoplayback?expire=1704509149&ei=fWqYZarSGPSZz7sPnKWGqA4&ip=103.176.70.125&id=o-APBytXw7g9rSKlT8jxOVq8k9It9wHbd3HmzWaoMzJ2Ul&itag=251&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=Fw&mm=31%2C26&mn=sn-cvh76nle%2Csn-h557sn66&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=1636250&spc=UWF9f5MU2OyFrpAQ2ATEGrp5k-5J_EcNDpVgS5012A&vprv=1&svpuc=1&mime=audio%2Fwebm&ns=R9NKV3R8Cb4U0eJVWCY2KrYQ&gir=yes&clen=5596757&dur=331.101&lmt=1700167103673598&mt=1704487272&fvip=4&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=y496J3szTWeF4w&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AAO5W4owRQIhANIVsPBiezMohacw81cHl7LkODfh5vjCGL3NpCcpS_KcAiASgTasCTA45LwaU6vV7Tr2JP77LV2dbv59mzowkUgHsA%3D%3D&sig=AJfQdSswRgIhANG_rzqPBDwrX1jf-V1J7sJdcq0GhU5gyDJjiceKJ2H-AiEAn7fg_E1HgHKq5MlFwixzbIqJ7Xodc0PSS1YCv8TgsJY%3D",
-      hasVideo: false,
-      hasAudio: true,
-      container: "webm",
-      codecs: "opus",
-      videoCodec: null,
-      audioCodec: "opus",
-      isLive: false,
-      isHLS: false,
-      isDashMPD: false,
-    },
-    {
-      mimeType: 'audio/mp4; codecs="mp4a.40.2"',
-      qualityLabel: null,
-      bitrate: 130609,
-      audioBitrate: 128,
-      itag: 140,
-      initRange: {
-        start: "0",
-        end: "631",
+      {
+        resolution: "240p",
+        thumbnail:
+          "https://scontent-ber1-1.xx.fbcdn.net/v/t15.5256-10/384549483_879062817257915_8132609418417021492_n.jpg?stp=dst-jpg_s960x960&_nc_cat=105&ccb=1-7&_nc_sid=dd673f&_nc_ohc=ZwXkw3_YmToAX8lZxqI&_nc_ht=scontent-ber1-1.xx&oh=00_AfB3FhBApylgD38n3HWLIRMPio0bdMzNcCFEUpjWuVOh2A&oe=659F62E1",
+        url: "/render.php?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2aWRlb191cmwiOiJodHRwczovL3ZpZGVvLWJlcjEtMS54eC5mYmNkbi5uZXQvdi90MzkuMjU0NDctMi80MDQzOTk2MDlfMzUxOTM4ODI0MTU0MTE5XzU3Nzc5MDc0Mjc5OTEwNjYzNTlfbi5tcDQ_X25jX2NhdD0xMTAmY2NiPTEtNyZfbmNfc2lkPTlhNWQ1MCZlZmc9ZXlKMlpXNWpiMlJsWDNSaFp5STZJbVJoYzJoZmNqSmZkbkE1WDJkbGJqRmhkbU5mY1Rjd1gyWnlZV2RmTWw5MmFXUmxieUo5Jl9uY19vaGM9V2V1cjVGbm9IbG9BWDliYldTQSZfbmNfaHQ9dmlkZW8tYmVyMS0xLnh4Jm9oPTAwX0FmQUFVYU92SDZUaHNUUWJ0bFBFXzE4TzFCQkpjYXBNRVRlelNvTGo4MTJPS2cmb2U9NjU5RUJBOUMiLCJhdWRpb191cmwiOiJodHRwczovL3ZpZGVvLWJlcjEtMS54eC5mYmNkbi5uZXQvdi90MzkuMjU0NDctMi8zOTQwNTA1ODdfNjUzNDkyNTk2OTE4MzcwXzI2NzEwMDEyODc5NTU1ODA5MDlfbi5tcDQ_X25jX2NhdD0xMDImY2NiPTEtNyZfbmNfc2lkPTlhNWQ1MCZlZmc9ZXlKMlpXNWpiMlJsWDNSaFp5STZJbVJoYzJoZllYVmthVzlmWVdGamNGODJORjltYm05eWJURTBYMlp5WVdkZk1sOWhkV1JwYnlKOSZfbmNfb2hjPURabGlhc2JGUFJ3QVg5czR0YXEmX25jX2h0PXZpZGVvLWJlcjEtMS54eCZvaD0wMF9BZkRGa3FUQTlRTzZsN2JoMW10Q3VraXAtWHg5Z3laMmRHTnB3UEtsdW9JZVhBJm9lPTY1OUY2MzIxIiwiaWQiOm51bGwsImZpbGVuYW1lIjoiU25hcFNhdmVfQXBwX18yNDBwLm1wNCJ9.y5-SbfggqjiHc9IV9pwui6vWAVOvLQCJQfeC7OHdNKM",
+        shouldRender: true,
       },
-      indexRange: {
-        start: "632",
-        end: "1071",
+      {
+        resolution: "180p",
+        thumbnail:
+          "https://scontent-ber1-1.xx.fbcdn.net/v/t15.5256-10/384549483_879062817257915_8132609418417021492_n.jpg?stp=dst-jpg_s960x960&_nc_cat=105&ccb=1-7&_nc_sid=dd673f&_nc_ohc=ZwXkw3_YmToAX8lZxqI&_nc_ht=scontent-ber1-1.xx&oh=00_AfB3FhBApylgD38n3HWLIRMPio0bdMzNcCFEUpjWuVOh2A&oe=659F62E1",
+        url: "/render.php?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2aWRlb191cmwiOiJodHRwczovL3ZpZGVvLWJlcjEtMS54eC5mYmNkbi5uZXQvdi90MzkuMjU0NDctMi80MDQyNzA5MTJfODg0ODkyOTYzMjQ3NjA1XzU5MTQ0NjE4MjY5NTg0NzczMzhfbi5tcDQ_X25jX2NhdD0xMDUmY2NiPTEtNyZfbmNfc2lkPTlhNWQ1MCZlZmc9ZXlKMlpXNWpiMlJsWDNSaFp5STZJbVJoYzJoZmNqSmZkbkE1WDJkbGJqRmhkbU5mY1Rnd1gyWnlZV2RmTWw5MmFXUmxieUo5Jl9uY19vaGM9dXBKRnQ5NjVZeFFBWDg0R2NobiZfbmNfaHQ9dmlkZW8tYmVyMS0xLnh4Jm9oPTAwX0FmQVQ1ZlNoZERLazFCSF93cFhMVzdWSTBYcTBWV0RKbzdmaGtfRVhTSmtQbkEmb2U9NjU5RjRERDEiLCJhdWRpb191cmwiOiJodHRwczovL3ZpZGVvLWJlcjEtMS54eC5mYmNkbi5uZXQvdi90MzkuMjU0NDctMi8zOTQwNTA1ODdfNjUzNDkyNTk2OTE4MzcwXzI2NzEwMDEyODc5NTU1ODA5MDlfbi5tcDQ_X25jX2NhdD0xMDImY2NiPTEtNyZfbmNfc2lkPTlhNWQ1MCZlZmc9ZXlKMlpXNWpiMlJsWDNSaFp5STZJbVJoYzJoZllYVmthVzlmWVdGamNGODJORjltYm05eWJURTBYMlp5WVdkZk1sOWhkV1JwYnlKOSZfbmNfb2hjPURabGlhc2JGUFJ3QVg5czR0YXEmX25jX2h0PXZpZGVvLWJlcjEtMS54eCZvaD0wMF9BZkRGa3FUQTlRTzZsN2JoMW10Q3VraXAtWHg5Z3laMmRHTnB3UEtsdW9JZVhBJm9lPTY1OUY2MzIxIiwiaWQiOm51bGwsImZpbGVuYW1lIjoiU25hcFNhdmVfQXBwX18xODBwLm1wNCJ9.Rh5CgfYSpAYrwxjF_M5bo06R53eYkLmmr_pOdtsErgQ",
+        shouldRender: true,
       },
-      lastModified: "1700163608019208",
-      contentLength: "5359888",
-      quality: "tiny",
-      projectionType: "RECTANGULAR",
-      averageBitrate: 129489,
-      highReplication: true,
-      audioQuality: "AUDIO_QUALITY_MEDIUM",
-      approxDurationMs: "331139",
-      audioSampleRate: "44100",
-      audioChannels: 2,
-      loudnessDb: 7.6199999,
-      url: "https://rr4---sn-cvh76nle.googlevideo.com/videoplayback?expire=1704509149&ei=fWqYZarSGPSZz7sPnKWGqA4&ip=103.176.70.125&id=o-APBytXw7g9rSKlT8jxOVq8k9It9wHbd3HmzWaoMzJ2Ul&itag=140&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=Fw&mm=31%2C26&mn=sn-cvh76nle%2Csn-h557sn66&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=1636250&spc=UWF9f5MU2OyFrpAQ2ATEGrp5k-5J_EcNDpVgS5012A&vprv=1&svpuc=1&mime=audio%2Fmp4&ns=R9NKV3R8Cb4U0eJVWCY2KrYQ&gir=yes&clen=5359888&dur=331.139&lmt=1700163608019208&mt=1704487272&fvip=4&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=y496J3szTWeF4w&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AAO5W4owRgIhAMC2AiTriYrTBevPM97npOETu_9f2aJ1_UcuA4p6hZbHAiEAk6dUpTUEAC1RIGcD2_6UGGDl0P8z5Mj7xECmTON-_uU%3D&sig=AJfQdSswRgIhAJkmtH8bG-RDbxhksPAA4DHfEqx-QrLg_9USPWGUF6FQAiEA0JVrK1jIIOHuIle9UQKtv7T0HLmG5zZnglT-V2DlF28%3D",
-      hasVideo: false,
-      hasAudio: true,
-      container: "mp4",
-      codecs: "mp4a.40.2",
-      videoCodec: null,
-      audioCodec: "mp4a.40.2",
-      isLive: false,
-      isHLS: false,
-      isDashMPD: false,
-    },
-    {
-      mimeType: 'audio/webm; codecs="opus"',
-      qualityLabel: null,
-      bitrate: 81893,
-      audioBitrate: 64,
-      itag: 250,
-      initRange: {
-        start: "0",
-        end: "265",
+      {
+        resolution: "72p",
+        thumbnail:
+          "https://scontent-ber1-1.xx.fbcdn.net/v/t15.5256-10/384549483_879062817257915_8132609418417021492_n.jpg?stp=dst-jpg_s960x960&_nc_cat=105&ccb=1-7&_nc_sid=dd673f&_nc_ohc=ZwXkw3_YmToAX8lZxqI&_nc_ht=scontent-ber1-1.xx&oh=00_AfB3FhBApylgD38n3HWLIRMPio0bdMzNcCFEUpjWuVOh2A&oe=659F62E1",
+        url: "/render.php?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2aWRlb191cmwiOiJodHRwczovL3ZpZGVvLWJlcjEtMS54eC5mYmNkbi5uZXQvdi90MzkuMjU0NDctMi80MDQ4MDMyOTBfMTMwNDA4NjQ3Njk1NjY2M18xNzY5MjcwODUyNTgwODM5NTcwX24ubXA0P19uY19jYXQ9MTA5JmNjYj0xLTcmX25jX3NpZD05YTVkNTAmZWZnPWV5SjJaVzVqYjJSbFgzUmhaeUk2SW1SaGMyaGZjakpmZG5BNVgyZGxiakZoZG1OZmNUUXdYMlp5WVdkZk1sOTJhV1JsYnlKOSZfbmNfb2hjPVdSN3VsWUlVdVdVQVgtVU9KWTcmX25jX2h0PXZpZGVvLWJlcjEtMS54eCZvaD0wMF9BZkNsTmF0Q2FxWExZNGJ0WTNYc2J0ZHBDQmhFZWtVQ1loR0RBSW5wYkE1S2d3Jm9lPTY1OUU1RkEyIiwiYXVkaW9fdXJsIjoiaHR0cHM6Ly92aWRlby1iZXIxLTEueHguZmJjZG4ubmV0L3YvdDM5LjI1NDQ3LTIvMzk0MDUwNTg3XzY1MzQ5MjU5NjkxODM3MF8yNjcxMDAxMjg3OTU1NTgwOTA5X24ubXA0P19uY19jYXQ9MTAyJmNjYj0xLTcmX25jX3NpZD05YTVkNTAmZWZnPWV5SjJaVzVqYjJSbFgzUmhaeUk2SW1SaGMyaGZZWFZrYVc5ZllXRmpjRjgyTkY5bWJtOXliVEUwWDJaeVlXZGZNbDloZFdScGJ5SjkmX25jX29oYz1EWmxpYXNiRlBSd0FYOXM0dGFxJl9uY19odD12aWRlby1iZXIxLTEueHgmb2g9MDBfQWZERmtxVEE5UU82bDdiaDFtdEN1a2lwLVh4OWd5WjJkR05wd1BLbHVvSWVYQSZvZT02NTlGNjMyMSIsImlkIjpudWxsLCJmaWxlbmFtZSI6IlNuYXBTYXZlX0FwcF9fNzJwLm1wNCJ9.sT4xVp0sHV10FnhA2GxG2gGkMoK7wXRl-fb_pC1uHxw",
+        shouldRender: true,
       },
-      indexRange: {
-        start: "266",
-        end: "840",
+      {
+        resolution: "108p",
+        thumbnail:
+          "https://scontent-ber1-1.xx.fbcdn.net/v/t15.5256-10/384549483_879062817257915_8132609418417021492_n.jpg?stp=dst-jpg_s960x960&_nc_cat=105&ccb=1-7&_nc_sid=dd673f&_nc_ohc=ZwXkw3_YmToAX8lZxqI&_nc_ht=scontent-ber1-1.xx&oh=00_AfB3FhBApylgD38n3HWLIRMPio0bdMzNcCFEUpjWuVOh2A&oe=659F62E1",
+        url: "/render.php?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2aWRlb191cmwiOiJodHRwczovL3ZpZGVvLWJlcjEtMS54eC5mYmNkbi5uZXQvdi90MzkuMjU0NDctMi80MDM1OTk2OTlfMzYyODQ1ODE2MjQwNDczXzgwNDA3OTQwMjI1MDc3OTk4MjBfbi5tcDQ_X25jX2NhdD0xMDgmY2NiPTEtNyZfbmNfc2lkPTlhNWQ1MCZlZmc9ZXlKMlpXNWpiMlJsWDNSaFp5STZJbVJoYzJoZmNqSmZkbkE1WDJkbGJqRmhkbU5mY1RVd1gyWnlZV2RmTWw5MmFXUmxieUo5Jl9uY19vaGM9eC1SVGZjT1FHMHdBWDktV3JqOSZfbmNfaHQ9dmlkZW8tYmVyMS0xLnh4Jm9oPTAwX0FmQ3NvaXZ5dzl6OTJJMHdHTzlDODZ4Qi1tVlNDVkRKcTgwRjNGd3lzZkpnRmcmb2U9NjU5RkIzQTgiLCJhdWRpb191cmwiOiJodHRwczovL3ZpZGVvLWJlcjEtMS54eC5mYmNkbi5uZXQvdi90MzkuMjU0NDctMi8zOTQwNTA1ODdfNjUzNDkyNTk2OTE4MzcwXzI2NzEwMDEyODc5NTU1ODA5MDlfbi5tcDQ_X25jX2NhdD0xMDImY2NiPTEtNyZfbmNfc2lkPTlhNWQ1MCZlZmc9ZXlKMlpXNWpiMlJsWDNSaFp5STZJbVJoYzJoZllYVmthVzlmWVdGamNGODJORjltYm05eWJURTBYMlp5WVdkZk1sOWhkV1JwYnlKOSZfbmNfb2hjPURabGlhc2JGUFJ3QVg5czR0YXEmX25jX2h0PXZpZGVvLWJlcjEtMS54eCZvaD0wMF9BZkRGa3FUQTlRTzZsN2JoMW10Q3VraXAtWHg5Z3laMmRHTnB3UEtsdW9JZVhBJm9lPTY1OUY2MzIxIiwiaWQiOm51bGwsImZpbGVuYW1lIjoiU25hcFNhdmVfQXBwX18xMDhwLm1wNCJ9.-2rHDvchNO_rfwBu2dlm1RpYsFUwnLIzotc--24m1K0",
+        shouldRender: true,
       },
-      lastModified: "1700162393807931",
-      contentLength: "2877498",
-      quality: "tiny",
-      projectionType: "RECTANGULAR",
-      averageBitrate: 69525,
-      audioQuality: "AUDIO_QUALITY_LOW",
-      approxDurationMs: "331101",
-      audioSampleRate: "48000",
-      audioChannels: 2,
-      loudnessDb: 7.6100001,
-      url: "https://rr4---sn-cvh76nle.googlevideo.com/videoplayback?expire=1704509149&ei=fWqYZarSGPSZz7sPnKWGqA4&ip=103.176.70.125&id=o-APBytXw7g9rSKlT8jxOVq8k9It9wHbd3HmzWaoMzJ2Ul&itag=250&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=Fw&mm=31%2C26&mn=sn-cvh76nle%2Csn-h557sn66&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=1636250&spc=UWF9f5MU2OyFrpAQ2ATEGrp5k-5J_EcNDpVgS5012A&vprv=1&svpuc=1&mime=audio%2Fwebm&ns=R9NKV3R8Cb4U0eJVWCY2KrYQ&gir=yes&clen=2877498&dur=331.101&lmt=1700162393807931&mt=1704487272&fvip=4&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=y496J3szTWeF4w&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AAO5W4owRQIgM72Ir_9qB5EDL4iy_XrzFlnAovq_2I3NDLgwWsr9WkkCIQDFs9YhaTgia35c-akTASgfk452kf8Ygtcq3MwNcScxqA%3D%3D&sig=AJfQdSswRgIhAJpL6gbvK53nYTqlaa3Q7CwNv-8Vq-4NB5PQKOFdLwptAiEA0svvsjpePwPyWIHhz3UZm-yCud0uqOuDocRjoe1Ue7o%3D",
-      hasVideo: false,
-      hasAudio: true,
-      container: "webm",
-      codecs: "opus",
-      videoCodec: null,
-      audioCodec: "opus",
-      isLive: false,
-      isHLS: false,
-      isDashMPD: false,
-    },
-    {
-      mimeType: 'audio/webm; codecs="opus"',
-      qualityLabel: null,
-      bitrate: 62192,
-      audioBitrate: 48,
-      itag: 249,
-      initRange: {
-        start: "0",
-        end: "265",
+      {
+        resolution: "144p",
+        thumbnail:
+          "https://scontent-ber1-1.xx.fbcdn.net/v/t15.5256-10/384549483_879062817257915_8132609418417021492_n.jpg?stp=dst-jpg_s960x960&_nc_cat=105&ccb=1-7&_nc_sid=dd673f&_nc_ohc=ZwXkw3_YmToAX8lZxqI&_nc_ht=scontent-ber1-1.xx&oh=00_AfB3FhBApylgD38n3HWLIRMPio0bdMzNcCFEUpjWuVOh2A&oe=659F62E1",
+        url: "/render.php?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2aWRlb191cmwiOiJodHRwczovL3ZpZGVvLWJlcjEtMS54eC5mYmNkbi5uZXQvdi90MzkuMjU0NDctMi80MDM2MTI4MDFfMTU1NDU4NjY5ODYyODQwMV84OTA4NzAwNTE1OTUzMTY5MDM5X24ubXA0P19uY19jYXQ9MTA2JmNjYj0xLTcmX25jX3NpZD05YTVkNTAmZWZnPWV5SjJaVzVqYjJSbFgzUmhaeUk2SW1SaGMyaGZjakpmZG5BNVgyZGxiakZoZG1OZmNUWXdYMlp5WVdkZk1sOTJhV1JsYnlKOSZfbmNfb2hjPWZRWUtYRWtyby1BQVg5dUpfYjMmX25jX2h0PXZpZGVvLWJlcjEtMS54eCZvaD0wMF9BZkQ4VWRnMWgxRkZSWjItY29QYTRpa0RRRmJ1NVlJV1IyNGlWWG93bU5HSnJBJm9lPTY1OUY0QkQxIiwiYXVkaW9fdXJsIjoiaHR0cHM6Ly92aWRlby1iZXIxLTEueHguZmJjZG4ubmV0L3YvdDM5LjI1NDQ3LTIvMzk0MDUwNTg3XzY1MzQ5MjU5NjkxODM3MF8yNjcxMDAxMjg3OTU1NTgwOTA5X24ubXA0P19uY19jYXQ9MTAyJmNjYj0xLTcmX25jX3NpZD05YTVkNTAmZWZnPWV5SjJaVzVqYjJSbFgzUmhaeUk2SW1SaGMyaGZZWFZrYVc5ZllXRmpjRjgyTkY5bWJtOXliVEUwWDJaeVlXZGZNbDloZFdScGJ5SjkmX25jX29oYz1EWmxpYXNiRlBSd0FYOXM0dGFxJl9uY19odD12aWRlby1iZXIxLTEueHgmb2g9MDBfQWZERmtxVEE5UU82bDdiaDFtdEN1a2lwLVh4OWd5WjJkR05wd1BLbHVvSWVYQSZvZT02NTlGNjMyMSIsImlkIjpudWxsLCJmaWxlbmFtZSI6IlNuYXBTYXZlX0FwcF9fMTQ0cC5tcDQifQ.cLfRUMwHPqUwgeOTNLDup2_3qzbb1McMu3qVTIAMXy0",
+        shouldRender: true,
       },
-      indexRange: {
-        start: "266",
-        end: "839",
-      },
-      lastModified: "1700160286645946",
-      contentLength: "2190179",
-      quality: "tiny",
-      projectionType: "RECTANGULAR",
-      averageBitrate: 52918,
-      audioQuality: "AUDIO_QUALITY_LOW",
-      approxDurationMs: "331101",
-      audioSampleRate: "48000",
-      audioChannels: 2,
-      loudnessDb: 7.6100001,
-      url: "https://rr4---sn-cvh76nle.googlevideo.com/videoplayback?expire=1704509149&ei=fWqYZarSGPSZz7sPnKWGqA4&ip=103.176.70.125&id=o-APBytXw7g9rSKlT8jxOVq8k9It9wHbd3HmzWaoMzJ2Ul&itag=249&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&mh=Fw&mm=31%2C26&mn=sn-cvh76nle%2Csn-h557sn66&ms=au%2Conr&mv=m&mvi=4&pl=24&initcwndbps=1636250&spc=UWF9f5MU2OyFrpAQ2ATEGrp5k-5J_EcNDpVgS5012A&vprv=1&svpuc=1&mime=audio%2Fwebm&ns=R9NKV3R8Cb4U0eJVWCY2KrYQ&gir=yes&clen=2190179&dur=331.101&lmt=1700160286645946&mt=1704487272&fvip=4&keepalive=yes&fexp=24007246&c=WEB&txp=5532434&n=y496J3szTWeF4w&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Cgir%2Cclen%2Cdur%2Clmt&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AAO5W4owRgIhALd81DLOVK7Q6xV5TUSRd7zlwgRxs2-UqhWBvl9Be3TBAiEApNRWRvPmxRx7fw5ETXPnEuovnJgOiXy0C0SC4HbH-is%3D&sig=AJfQdSswRAIgMSyHCj961nUZOo98hyTz7Fvsah6oYe3ipHB8l-ZU-WECIFQsWFQvmsqD282DkIliYmRp7-Q1JQ5d3BLm1rPrjcG6",
-      hasVideo: false,
-      hasAudio: true,
-      container: "webm",
-      codecs: "opus",
-      videoCodec: null,
-      audioCodec: "opus",
-      isLive: false,
-      isHLS: false,
-      isDashMPD: false,
-    },
-  ],
+    ],
+  },
 };
 
 function HomePage(props: any) {
   const [videoUrl, setVideoUrl] = useState("");
+  const [inVideoUrl, setInVideoUrl] = useState("");
   const [audioResponse, setAudioResponse] = useState<Root>(sampleResponse);
   const [playVideo, setPlayVideo] = useState(false);
   const [isTermsAggred, setIsTermsAggred] = useState(true);
   const [isDownloadSuccess, setIsDownloadSuccess] = useState(false);
   const [open, setOpen] = React.useState(false);
+
+  useEffect(() => {
+    //setIsDownloadSuccess(true);
+    return () => {};
+  }, []);
 
   const handleClose = () => {
     setOpen(false);
@@ -197,8 +116,8 @@ function HomePage(props: any) {
       return;
     }
 
-    if (videoUrl === "" || !videoUrl.startsWith("https://youtu")) {
-      alert("A Valid Youtube Video URL is Required!!");
+    if (videoUrl === "" || !videoUrl.includes("facebook")) {
+      alert("A Valid Facebook Video URL is Required!!");
       return;
     }
 
@@ -207,6 +126,7 @@ function HomePage(props: any) {
     setIsDownloadSuccess(true);
     setPlayVideo(true);
     static_video_url = videoUrl;
+    setInVideoUrl(audioResponse.info.data[0].url);
     setTimeout(() => {
       handleClose();
       setVideoUrl("");
@@ -218,25 +138,49 @@ function HomePage(props: any) {
     //setPlayVideo(checked);
   }
 
+  function handleUnavailableVideos(result: Root) {
+    if (result.info.status === false || result.info.status === undefined) {
+      alert(
+        "This Facebook Video is private and can't be downloaded..Try with other video"
+      );
+      handleClose();
+      return;
+    }
+  }
+
   function fetchDownloadableLink(): void {
     if (!isTermsAggred) {
       alert("Please Agree with our Terms & Condition before procedding..");
       return;
     }
 
-    if (videoUrl === "" || !videoUrl.startsWith("https://youtu")) {
-      alert("A Valid Youtube Video URL is Required!!");
+    if (
+      videoUrl === "" ||
+      !videoUrl.includes("facebook") &&
+      !videoUrl.includes("fb")
+    ) {
+      alert("A Valid Facebook Video URL is Required!!");
       return;
     }
     handleOpen();
-
-    axios.post(API_BASE_URL + videoUrl).then(
+    axios.post<Root>(API_BASE_URL + videoUrl).then(
       (result) => {
-        console.log("Hitting Youtube Dpwnload API is successful");
+        console.log("Hitting Facebook Download API is successful");
+        console.log("rd :" + JSON.stringify(result.data));
+        if (
+          result.data.info.status === false ||
+          result.data.info.status === undefined
+        ) {
+          alert(
+            "This Facebook Video is private and can't be downloaded..Try with other video"
+          );
+          handleClose();
+          return;
+        }
         setAudioResponse(result.data);
         setIsDownloadSuccess(true);
+        setInVideoUrl(result.data.info.data[0].url);
         setPlayVideo(true);
-        static_video_url = videoUrl;
         setTimeout(() => {
           handleClose();
           setVideoUrl("");
@@ -251,8 +195,12 @@ function HomePage(props: any) {
   }
 
   function handleVideoPlay(): any {
-    if (videoUrl === "" || !videoUrl.includes("youtu")) {
-      alert("A Valid Youtube Video URL is Required!!");
+    if (inVideoUrl === "") {
+      alert("You need to download first to play Facebook videos..");
+      return;
+    }
+    if (videoUrl === "" || !videoUrl.includes("facebook")) {
+      alert("A Valid Facebook Video URL is Required!!");
       return;
     }
     static_video_url = videoUrl;
@@ -301,14 +249,14 @@ function HomePage(props: any) {
           sx={{ marginTop: "20px", marginBottom: "10px", width: "200px" }}
           variant="contained"
         >
-          Download Audio
+          Download Video
         </Button>
         <Button
           onClick={handleVideoPlay}
           sx={{ width: "200px", marginTop: "10px", marginBottom: "15px" }}
           variant="outlined"
         >
-          Play Audio
+          Play Video
         </Button>
         <h3 className="text-xs text-center w-80 m-2">
           A direct prompt to download video will get triggered if video has only
@@ -332,7 +280,7 @@ function HomePage(props: any) {
       {isDownloadSuccess && (
         <div className="border-2 text-center border-blue-500 shadow-sm p-4">
           <div className="flex flex-col items-center md:flex-row font-mono mb-5 justify-center">
-            <h3 className="font-bold text-xl">Audio Fetching Successful</h3>
+            <h3 className="font-bold text-xl">Video Fetching Successful</h3>
             <img
               className="m-2"
               width="30px"
@@ -349,7 +297,7 @@ function HomePage(props: any) {
             />
           </div>
 
-          {audioResponse.downloadableFormats.map((format, index) => {
+          {audioResponse.info.data.map((format, index) => {
             return (
               <Button
                 sx={{ margin: "10px", color: "blue", fontWeight: "bold" }}
@@ -357,9 +305,7 @@ function HomePage(props: any) {
                 variant="outlined"
                 onClick={() => openLink(format.url)}
               >
-                Download [{format.bitrate}-{format.audioBitrate}-Bitrate] [
-                {format.audioQuality}] [{format.audioSampleRate} Sample]
-                Webm/Mp3
+                Download Video [{format.resolution}]
               </Button>
             );
           })}
@@ -370,10 +316,11 @@ function HomePage(props: any) {
         <div className="w-full sm:w-50px lg:w-1/2 mt-10 mb-10">
           <ReactPlayer
             width="100%"
+            loop={true}
             controls={true}
             pip={true}
             volume={1}
-            url={static_video_url}
+            url={inVideoUrl}
           />
         </div>
       )}

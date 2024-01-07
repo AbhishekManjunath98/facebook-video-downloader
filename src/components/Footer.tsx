@@ -29,7 +29,7 @@ function Footer(props: any) {
         <div className="w-full m-5 flex items-center justify-center">
           <img alt="" src={LogoImage} className="w-7 h-7" />
           <h1 className="text-center ml-4 text-white text-xl font-bold">
-            Youtube Audio Downloader+
+            Facebook Video Downloader+
           </h1>
         </div>
 
@@ -37,45 +37,45 @@ function Footer(props: any) {
           <div className="p-5 container grid grid-cols-3 md:grid-cols-4 gap-2 w-full">
             {heading(
               "Youtube Video Downloader",
-              "https://en.wikipedia.org/wiki/Web_colors"
+              "https://youtubevideo-downloader.netlify.app"
             )}
             {heading(
               "Youtube Audio Downloader",
-              "https://en.wikipedia.org/wiki/Web_colors"
+              "https://youtubeaudio-downloader.netlify.app"
             )}
             {heading(
               "Youtube Shorts Downloader",
-              "https://en.wikipedia.org/wiki/Web_colors"
+              "https://youtubeshorts-downloader.app"
             )}
             {heading(
               "Youtube Thumbnail Downloader",
-              "https://en.wikipedia.org/wiki/Web_colors"
+              "https://youtubethumbnail-downloader.netlify.app"
             )}
 
             {heading(
               "Facebook Video Downloader",
-              "https://en.wikipedia.org/wiki/Web_colors"
+              "https://facebookvideo-downloader.netlify.app"
             )}
             {heading(
               "Facebook Audio Downloader",
-              "https://en.wikipedia.org/wiki/Web_colors"
+              "https://facebookaudio-downloader.netlify.app"
             )}
             {heading(
               "Facebook Thumbnail Downloader",
-              "https://en.wikipedia.org/wiki/Web_colors"
+              "https://facebookthumbnail-downloader.netlify.app"
             )}
 
             {heading(
               "Instagram Video Downloader",
-              "https://en.wikipedia.org/wiki/Web_colors"
+              "https://instagramvideo-downloader.netlify.app"
             )}
             {heading(
               "Instagram Audio Downloader",
-              "https://en.wikipedia.org/wiki/Web_colors"
+              "https://instagramaudio-downloader.netlify.app"
             )}
             {heading(
               "Instagram Thumbnail Downloader",
-              "https://en.wikipedia.org/wiki/Web_colors"
+              "https://instagramthumbnail-downloader.netlify.app"
             )}
           </div>
         </div>
